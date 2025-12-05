@@ -287,7 +287,7 @@ function initializeWebsite() {
   initImagePreloading(); // 이미지 프리로딩을 가장 먼저 실행
   initKakao(); // 카카오 SDK 초기화
   initCountdown();
-  // initGallery(); // 불필요하면 삭제
+  initGallery(); // 갤러리 초기화
   // initGuestbook();
   //   initRsvp();
   initFadeInAnimation(); // 페이드인 애니메이션 초기화
@@ -391,6 +391,43 @@ function initImagePreloading() {
       }
     });
   }
+
+  // gallery_webp 폴더의 모든 이미지 추가
+  const galleryWebpImages = [
+    "assets/images/gallery_webp/01.webp",
+    "assets/images/gallery_webp/02.webp",
+    "assets/images/gallery_webp/03.webp",
+    "assets/images/gallery_webp/04.webp",
+    "assets/images/gallery_webp/05.webp",
+    "assets/images/gallery_webp/06.webp",
+    "assets/images/gallery_webp/07.webp",
+    "assets/images/gallery_webp/08.webp",
+    "assets/images/gallery_webp/09.webp",
+    "assets/images/gallery_webp/10.webp",
+    "assets/images/gallery_webp/11_main.webp",
+    "assets/images/gallery_webp/12.webp",
+    "assets/images/gallery_webp/13.webp",
+    "assets/images/gallery_webp/14.webp",
+    "assets/images/gallery_webp/15.webp",
+    "assets/images/gallery_webp/16.webp",
+    "assets/images/gallery_webp/17.webp",
+    "assets/images/gallery_webp/18.webp",
+    "assets/images/gallery_webp/19.webp",
+    "assets/images/gallery_webp/20.webp",
+    "assets/images/gallery_webp/21.webp",
+    "assets/images/gallery_webp/22.webp",
+    "assets/images/gallery_webp/23.webp",
+    "assets/images/gallery_webp/24.webp",
+    "assets/images/gallery_webp/25.webp",
+    "assets/images/gallery_webp/26.webp",
+    "assets/images/gallery_webp/27.webp",
+  ];
+
+  galleryWebpImages.forEach((img) => {
+    if (!pageImageUrls.includes(img)) {
+      pageImageUrls.push(img);
+    }
+  });
 
   if (pageImageUrls.length > 0) {
     totalImagesToPreload = pageImageUrls.length;
@@ -730,106 +767,226 @@ function initGallery() {
     return;
   }
 
-  // wedding-data.js에서 갤러리 이미지 가져오기
-  if (
-    typeof weddingData !== "undefined" &&
-    weddingData.gallery_images &&
-    weddingData.gallery_images.length > 0
-  ) {
-    console.log(
-      `🖼️ ${weddingData.gallery_images.length}개의 갤러리 이미지 발견`
-    );
+  // gallery_webp 폴더의 모든 이미지 파일 목록
+  const galleryImages = [
+    "assets/images/gallery_webp/01.webp",
+    "assets/images/gallery_webp/02.webp",
+    "assets/images/gallery_webp/03.webp",
+    "assets/images/gallery_webp/04.webp",
+    "assets/images/gallery_webp/05.webp",
+    "assets/images/gallery_webp/06.webp",
+    "assets/images/gallery_webp/07.webp",
+    "assets/images/gallery_webp/08.webp",
+    "assets/images/gallery_webp/09.webp",
+    "assets/images/gallery_webp/10.webp",
+    "assets/images/gallery_webp/11_main.webp",
+    "assets/images/gallery_webp/12.webp",
+    "assets/images/gallery_webp/13.webp",
+    "assets/images/gallery_webp/14.webp",
+    "assets/images/gallery_webp/15.webp",
+    "assets/images/gallery_webp/16.webp",
+    "assets/images/gallery_webp/17.webp",
+    "assets/images/gallery_webp/18.webp",
+    "assets/images/gallery_webp/19.webp",
+    "assets/images/gallery_webp/20.webp",
+    "assets/images/gallery_webp/21.webp",
+    "assets/images/gallery_webp/22.webp",
+    "assets/images/gallery_webp/23.webp",
+    "assets/images/gallery_webp/24.webp",
+    "assets/images/gallery_webp/25.webp",
+    "assets/images/gallery_webp/26.webp",
+    "assets/images/gallery_webp/27.webp",
+  ];
 
-    // 기존 갤러리 아이템 제거
-    galleryGrid.innerHTML = "";
+  console.log(`🖼️ ${galleryImages.length}개의 갤러리 이미지 발견`);
 
-    // 갤러리 이미지 동적 생성
-    let loadedCount = 0;
-    let errorCount = 0;
+  // 기존 갤러리 아이템 제거
+  galleryGrid.innerHTML = "";
 
-    weddingData.gallery_images.forEach((imagePath, index) => {
-      if (!imagePath || imagePath.trim() === "") {
-        console.warn(`⚠️ 갤러리 이미지 ${index + 1}: 빈 경로`);
-        return;
-      }
+  // 각 이미지의 비율과 위치 정보를 저장할 배열
+  const imageData = [];
+  let loadedCount = 0;
+  let errorCount = 0;
 
-      const item = document.createElement("div");
-      item.className = "item";
-      item.onclick = function () {
-        openImageModal(imagePath);
-      };
-      // item.setAttribute("onclick", `openImageModal('${imagePath}')`);
+  // 모든 이미지 로드 및 비율 확인
+  galleryImages.forEach((imagePath, index) => {
+    const img = new Image();
 
-      // 기본 스타일 설정 (높이 명시)
-      item.style.cssText = `
-        background-image: url('${imagePath}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 200px;
-        height: 200px;
-        width: 100%;
-        cursor: pointer;
-        display: block;
-        visibility: visible;
-        opacity: 0.5;
-        transition: opacity 0.3s ease;
-      `;
+    img.onload = function () {
+      loadedCount++;
+      const aspectRatio = img.width / img.height;
 
-      // 이미지 로드 확인
-      const img = new Image();
-      img.onload = function () {
-        loadedCount++;
-        console.log(
-          `✅ 이미지 로드 성공 (${loadedCount}/${weddingData.gallery_images.length}): ${imagePath}`
-        );
-        // 로드 성공 시 opacity를 1로 변경 (CSS의 !important를 덮어쓰기 위해 인라인 스타일 강제)
-        item.setAttribute(
-          "style",
-          item.style.cssText.replace("opacity: 0.5", "opacity: 1 !important")
-        );
-        item.style.setProperty("opacity", "1", "important");
-      };
-      img.onerror = function () {
-        errorCount++;
-        console.error(`❌ 이미지 로드 실패 (${errorCount}): ${imagePath}`);
-        // 로드 실패 시 회색 배경과 텍스트 표시
-        item.style.cssText = `
-          background-color: #f0f0f0 !important;
-          background-image: none !important;
-          min-height: 200px;
-          height: 200px;
-          width: 100%;
-          cursor: pointer;
-          display: flex !important;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.5 !important;
-        `;
-        item.innerHTML = `<div style="color: #999; font-size: 12px;">이미지 없음</div>`;
-      };
+      // 비율에 따라 grid span 결정
+      // 세로형 (aspectRatio < 1): span 2 (높이 2칸)
+      // 가로형 (aspectRatio >= 1): span 1 (높이 1칸)
+      const rowSpan = aspectRatio < 1 ? 2 : 1;
 
-      // 이미지 로드 시작
-      img.src = imagePath;
+      imageData.push({
+        path: imagePath,
+        index: index,
+        aspectRatio: aspectRatio,
+        rowSpan: rowSpan,
+        width: img.width,
+        height: img.height,
+      });
 
-      galleryGrid.appendChild(item);
-    });
-
-    // 로드 완료 후 로그
-    setTimeout(() => {
       console.log(
-        `✅ 갤러리 이미지 동적 생성 완료 (성공: ${loadedCount}, 실패: ${errorCount})`
+        `✅ 이미지 로드 성공 (${loadedCount}/${
+          galleryImages.length
+        }): ${imagePath} - 비율: ${aspectRatio.toFixed(2)}, span: ${rowSpan}`
       );
-      if (errorCount > 0) {
-        console.warn(
-          `⚠️ ${errorCount}개의 이미지 로드 실패. 경로를 확인해주세요.`
+
+      // 모든 이미지 로드 완료 시 grid 배치
+      if (loadedCount + errorCount === galleryImages.length) {
+        console.log(
+          `📊 이미지 로드 완료: 성공 ${loadedCount}, 실패 ${errorCount}, 총 ${imageData.length}개`
         );
+        if (imageData.length > 0) {
+          arrangeGalleryGrid(imageData);
+        } else {
+          console.error("❌ 로드된 이미지가 없습니다.");
+        }
       }
-    }, 1000);
-  } else {
-    console.warn("⚠️ 갤러리 이미지가 설정되지 않았습니다.");
-    console.warn("wedding-data.js의 gallery_images 배열을 확인해주세요.");
-  }
+    };
+
+    img.onerror = function () {
+      errorCount++;
+      console.error(`❌ 이미지 로드 실패 (${errorCount}): ${imagePath}`);
+
+      // 모든 이미지 처리 완료 시 grid 배치
+      if (loadedCount + errorCount === galleryImages.length) {
+        console.log(
+          `📊 이미지 로드 완료: 성공 ${loadedCount}, 실패 ${errorCount}, 총 ${imageData.length}개`
+        );
+        if (imageData.length > 0) {
+          arrangeGalleryGrid(imageData);
+        } else {
+          console.error("❌ 로드된 이미지가 없습니다.");
+        }
+      }
+    };
+
+    // 이미지 로드 시작
+    img.src = imagePath;
+  });
+
+  // 타임아웃 설정 (10초 후에도 로드되지 않으면 강제로 배치)
+  setTimeout(() => {
+    if (imageData.length > 0 && galleryGrid.children.length === 0) {
+      console.warn(
+        "⏰ 타임아웃: 일부 이미지가 로드되지 않았지만 배치를 시작합니다."
+      );
+      arrangeGalleryGrid(imageData);
+    }
+  }, 10000);
+}
+
+// 갤러리 그리드 배치 함수
+function arrangeGalleryGrid(imageData) {
+  const galleryGrid = document.getElementById("gallery-grid");
+  if (!galleryGrid) return;
+
+  console.log("📐 갤러리 그리드 배치 시작...", imageData);
+
+  // 이미지를 인덱스 순서대로 정렬
+  imageData.sort((a, b) => a.index - b.index);
+
+  // 2열 그리드에서 각 열의 현재 높이 추적
+  let col1Height = 0;
+  let col2Height = 0;
+  let currentRow = 1; // 현재 행 위치
+
+  imageData.forEach((data, index) => {
+    const gridItem = document.createElement("div");
+    const delayClass = `fade-in-delay-${(index % 3) + 1}`;
+    gridItem.className = `grid-item fade-in-up ${delayClass}`;
+
+    // 비율에 따라 grid-row와 grid-column 결정
+    const rowSpan = data.rowSpan;
+    let gridRowStart, gridColumnStart, gridColumnEnd;
+
+    // 높이가 낮은 열에 배치
+    if (col1Height <= col2Height) {
+      // 첫 번째 열에 배치
+      gridRowStart = col1Height + 1;
+      gridColumnStart = 1;
+      gridColumnEnd = 2;
+      col1Height += rowSpan;
+    } else {
+      // 두 번째 열에 배치
+      gridRowStart = col2Height + 1;
+      gridColumnStart = 2;
+      gridColumnEnd = 3;
+      col2Height += rowSpan;
+    }
+
+    gridItem.style.gridRow = `${gridRowStart} / span ${rowSpan}`;
+    gridItem.style.gridColumn = `${gridColumnStart} / ${gridColumnEnd}`;
+
+    // 내부 item 요소 생성
+    const item = document.createElement("div");
+    item.className = "item image-preloaded";
+    item.style.cssText = `
+      background-image: url('${data.path}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      aspect-ratio: ${data.width} / ${data.height};
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: pointer;
+    `;
+    item.onclick = function () {
+      openImageModal(data.path);
+    };
+
+    gridItem.appendChild(item);
+    galleryGrid.appendChild(gridItem);
+
+    console.log(
+      `📐 이미지 ${index + 1} 배치: ${
+        data.path
+      } - grid-row: ${gridRowStart} / span ${rowSpan}, grid-column: ${gridColumnStart} / ${gridColumnEnd}, 비율: ${data.aspectRatio.toFixed(
+        2
+      )}`
+    );
+  });
+
+  console.log("✅ 갤러리 그리드 배치 완료");
+
+  // 갤러리 요소들이 생성된 후 IntersectionObserver에 등록
+  setTimeout(() => {
+    const galleryFadeElements = galleryGrid.querySelectorAll(
+      ".grid-item.fade-in-up"
+    );
+    galleryFadeElements.forEach((el) => {
+      // 이미 화면에 보이는 요소는 즉시 애니메이션
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+      if (isVisible) {
+        el.classList.add("animated");
+      } else {
+        // 옵저버에 등록
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("animated");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "50px",
+          }
+        );
+        observer.observe(el);
+      }
+    });
+  }, 100);
 }
 
 // 방명록 초기화

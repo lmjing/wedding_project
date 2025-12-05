@@ -753,6 +753,7 @@ button {
 
 .mcard-intro .photo {
   line-height: 0;
+  height: 462.16px;
 }
 
 .mcard-intro .photo img {
@@ -1150,6 +1151,10 @@ button {
   margin: 1px 0;
   padding: 50px 0;
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* 가로 스크롤 방지 */
 }
 
 .gallery-square {
@@ -1169,11 +1174,16 @@ button {
 }
 
 .gallery-grid.grid2 {
-  margin: 0 32px;
+  margin: 0;
+  padding: 0 8px; /* 좌우 패딩 줄임 */
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(11, auto);
+  grid-auto-rows: min-content; /* 내용에 맞게 높이 조정 */
   grid-auto-flow: row;
-  max-width: calc(100vw - 64px); /* 마진을 고려한 최대 너비 */
+  gap: 2px; /* 그리드 아이템 간 간격 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-content: start; /* 상단 정렬 */
 }
 
 /* 모바일에서 갤러리 마진 줄이기 */
@@ -1184,8 +1194,9 @@ button {
   }
 
   .gallery-grid.grid2 {
-    margin: 0 16px;
-    max-width: calc(100vw - 32px);
+    margin: 0;
+    padding: 0 20px; /* 모바일에서 더 작은 패딩 */
+    max-width: 100%;
   }
 }
 
@@ -1261,9 +1272,24 @@ body.fonts-loaded {
   /* 갤러리 재로딩 방지 */
   visibility: visible !important;
   display: block !important;
+  opacity: 1 !important;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
   will-change: auto;
   contain: none;
   backface-visibility: visible;
+}
+
+/* 갤러리 grid-item 기본 스타일 */
+.gallery-grid .grid-item {
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  overflow: hidden; /* 내용이 넘치지 않도록 */
 }
 
 /* 갤러리 요소들의 fade-in 애니메이션 지원 */
@@ -1300,16 +1326,23 @@ body.fonts-loaded {
 }
 
 .gallery-container {
-  margin: 40px 0 0;
+  margin: 20px 0 0; /* 상단 마진 줄임 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* 가로 스크롤 방지 */
 }
 
 .gallery-grid-container {
-  overflow: hidden;
+  overflow: hidden; /* 가로 스크롤 방지 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .gallery-grid-container.transition {
   /* 애니메이션 제거 - 즉시 표시 */
-  max-height: 2200px;
+  max-height: none; /* 높이 제한 제거 */
 }
 
 /* 지도 섹션 */
