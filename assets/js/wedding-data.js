@@ -30,7 +30,7 @@ const weddingData = {
 
   // 이미지 경로
   images: {
-    main_photo: "assets/images/main.webp",
+    main_photo: "assets/images/main.png",
     invitation_photo: "", // 초대장 사진 (필요시 입력)
     outro_photo: "assets/images/last2.webp", // 마무리 사진 (필요시 입력)
   },
@@ -133,7 +133,7 @@ const weddingData = {
 
   // 메타 정보
   meta: {
-    thumbnail: "assets/images/20250918_225238_2.png", // OG 이미지
+    thumbnail: "assets/images/main.png", // OG 이미지
   },
 
   // 배경음악 설정

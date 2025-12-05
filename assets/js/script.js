@@ -66,10 +66,11 @@ function injectWeddingData() {
   const pageTitle = generatePageTitle();
   const pageDescription = generatePageDescription();
   const ogImage =
-    data.meta.thumbnail || images.main_photo || "assets/images/main-photo.jpg";
+    data.meta.thumbnail || images.main_photo || "assets/images/main.png";
 
   document.title = pageTitle;
   updateMetaTag("og:title", pageTitle);
+  updateMetaTag("og:site_name", pageTitle);
   updateMetaTag("og:description", pageDescription);
   updateMetaTag("og:image", ogImage);
   updateMetaTag("twitter:title", pageTitle);
