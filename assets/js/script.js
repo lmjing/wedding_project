@@ -1785,7 +1785,7 @@ function openNaverMap() {
 
 // 카카오 내비 열기
 function openKakaoNavi() {
-  const address = "서울 용산구 이태원로 22";
+  const address = "국방컨벤션";
 
   // 모바일에서 카카오내비 앱 실행 시도
   if (
