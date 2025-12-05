@@ -288,6 +288,7 @@ function initializeWebsite() {
   initKakao(); // 카카오 SDK 초기화
   initCountdown();
   initGallery(); // 갤러리 초기화
+  initGalleryMoreButton(); // 갤러리 더보기 버튼 초기화
   // initGuestbook();
   //   initRsvp();
   initFadeInAnimation(); // 페이드인 애니메이션 초기화
@@ -881,6 +882,13 @@ function initGallery() {
   }, 10000);
 }
 
+// 갤러리 상태 관리
+let galleryState = {
+  allImages: [],
+  displayedCount: 0,
+  currentStep: 0, // 0: 초기, 1: 첫 번째 더보기, 2: 두 번째 더보기
+};
+
 // 갤러리 그리드 배치 함수
 function arrangeGalleryGrid(imageData) {
   const galleryGrid = document.getElementById("gallery-grid");
@@ -891,12 +899,52 @@ function arrangeGalleryGrid(imageData) {
   // 이미지를 인덱스 순서대로 정렬
   imageData.sort((a, b) => a.index - b.index);
 
+  // 전체 이미지 데이터 저장
+  galleryState.allImages = imageData;
+  galleryState.displayedCount = 0;
+  galleryState.currentStep = 0;
+
+  // 초기 6개만 표시
+  if (imageData.length > 0) {
+    showMoreGalleryImages(6);
+  }
+}
+
+// 갤러리 이미지 표시 함수
+function showMoreGalleryImages(count) {
+  const galleryGrid = document.getElementById("gallery-grid");
+  if (!galleryGrid) return;
+
+  const startIndex = galleryState.displayedCount;
+  const endIndex = Math.min(startIndex + count, galleryState.allImages.length);
+  const imagesToShow = galleryState.allImages.slice(startIndex, endIndex);
+
+  if (imagesToShow.length === 0) return;
+
   // 2열 그리드에서 각 열의 현재 높이 추적
   let col1Height = 0;
   let col2Height = 0;
-  let currentRow = 1; // 현재 행 위치
 
-  imageData.forEach((data, index) => {
+  // 기존 그리드 아이템들의 높이 계산
+  const existingItems = galleryGrid.querySelectorAll(".grid-item");
+  existingItems.forEach((item) => {
+    const gridRow = item.style.gridRow;
+    const match = gridRow.match(/span (\d+)/);
+    if (match) {
+      const span = parseInt(match[1]);
+      const gridColumn = item.style.gridColumn;
+      // gridColumn이 "2 / 3" 형식이면 두 번째 열
+      if (gridColumn && gridColumn.includes("2 / 3")) {
+        col2Height += span;
+      } else {
+        // "1 / 2" 형식이면 첫 번째 열
+        col1Height += span;
+      }
+    }
+  });
+
+  imagesToShow.forEach((data, relativeIndex) => {
+    const index = startIndex + relativeIndex;
     const gridItem = document.createElement("div");
     const delayClass = `fade-in-delay-${(index % 3) + 1}`;
     gridItem.className = `grid-item fade-in-up ${delayClass}`;
@@ -932,10 +980,10 @@ function arrangeGalleryGrid(imageData) {
       background-position: center;
       background-repeat: no-repeat;
       aspect-ratio: ${data.width} / ${data.height};
-      width: 100%;
+          width: 100%;
       height: 100%;
       display: block;
-      cursor: pointer;
+          cursor: pointer;
     `;
     item.onclick = function () {
       openImageModal(data.path);
@@ -953,7 +1001,15 @@ function arrangeGalleryGrid(imageData) {
     );
   });
 
-  console.log("✅ 갤러리 그리드 배치 완료");
+  // displayedCount 업데이트
+  galleryState.displayedCount = endIndex;
+
+  console.log(
+    `✅ 갤러리 이미지 표시 완료: ${galleryState.displayedCount}/${galleryState.allImages.length}`
+  );
+
+  // 더보기 버튼 업데이트
+  updateGalleryMoreButton();
 
   // 갤러리 요소들이 생성된 후 IntersectionObserver에 등록
   setTimeout(() => {
@@ -987,6 +1043,49 @@ function arrangeGalleryGrid(imageData) {
       }
     });
   }, 100);
+}
+
+// 더보기 버튼 업데이트 함수
+function updateGalleryMoreButton() {
+  const moreButton = document.getElementById("gallery-more-button");
+  if (!moreButton) return;
+
+  // 모든 이미지가 표시되었으면 버튼 숨김
+  if (galleryState.displayedCount >= galleryState.allImages.length) {
+    moreButton.style.display = "none";
+    return;
+  }
+
+  // 버튼 표시
+  moreButton.style.display = "block";
+}
+
+// 더보기 버튼 클릭 이벤트 초기화
+function initGalleryMoreButton() {
+  const moreButton = document.getElementById("gallery-more-button");
+  if (!moreButton) return;
+
+  const arrowSvg = moreButton.querySelector("svg");
+  const buttonWrapper = moreButton.querySelector("div");
+
+  // 버튼 클릭 이벤트
+  moreButton.addEventListener("click", function () {
+    galleryState.currentStep++;
+
+    if (galleryState.currentStep === 1) {
+      // 첫 번째 더보기: 10개 추가
+      showMoreGalleryImages(10);
+    } else if (galleryState.currentStep >= 2) {
+      // 두 번째 더보기: 나머지 모두 표시
+      const remaining =
+        galleryState.allImages.length - galleryState.displayedCount;
+      if (remaining > 0) {
+        showMoreGalleryImages(remaining);
+      }
+    }
+  });
+
+  // 호버 효과는 CSS로 처리
 }
 
 // 방명록 초기화

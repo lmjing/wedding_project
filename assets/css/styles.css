@@ -1314,15 +1314,42 @@ body.fonts-loaded {
 }
 
 .gallery-more-button {
-  color: var(--btn-text-color);
-  border: 1px solid var(--btn-border-color);
-  padding: 4px 26px;
-  border-radius: 32px;
+  margin: 30px auto 0;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  opacity: 1 !important; /* 항상 보이도록 */
+  transform: translateY(0) !important; /* transform 초기화 */
 }
 
 .gallery-more-button > div {
-  border-bottom: 1px solid var(--btn-text-color);
-  border-right: 1px solid var(--btn-text-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 26px;
+  border: 1px solid var(--btn-border-color);
+  border-radius: 32px;
+  color: var(--btn-text-color);
+  font-size: 0.86rem;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.gallery-more-button > div svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.gallery-more-button:active > div {
+  background: transparent;
+  color: var(--btn-text-color);
+  border-color: var(--btn-border-color);
+}
+
+.gallery-more-button:active > div svg {
+  transform: translateY(0);
+  stroke: currentColor;
 }
 
 .gallery-container {

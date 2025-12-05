@@ -342,222 +342,31 @@
             <div class="gallery-container">
               <div class="gallery-grid-container transition">
                 <div class="gallery-grid grid2" id="gallery-grid">
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-1"
-                    style="
-                      grid-area: span 2 / 2 / auto / 3;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
+                  <!-- 갤러리 이미지는 JavaScript에서 동적으로 생성됩니다 -->
+                </div>
+              </div>
+              <div
+                class="gallery-more-button fade-in-up animated"
+                id="gallery-more-button"
+                style="display: none"
+              >
+                <div>
+                  <span>더보기</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('assets/images/gallery_webp/01.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('assets/images/gallery_webp/01.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-2"
-                    style="
-                      grid-area: span 1 / 2 / auto / 2;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('assets/images/gallery_webp/02.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('assets/images/gallery_webp/02.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-2"
-                    style="
-                      grid-area: span 2 / 1 / auto / 2;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('assets/images/gallery_webp/03.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('assets/images/gallery_webp/03.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-3"
-                    style="
-                      grid-area: span 1 / 2 / auto / 3;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20250918_011644_12_CJG01164-.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20250918_011644_12_CJG01164-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-1"
-                    style="
-                      grid-area: span 1 / 1 / auto / 2;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20250918_011658_22_CJG01695-.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20250918_011658_22_CJG01695-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-2"
-                    style="
-                      grid-area: span 2 / 2 / auto / 3;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20250918_011702_24_CJG01721-.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20250918_011702_24_CJG01721-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-3"
-                    style="
-                      grid-area: span 2 / 1 / auto / 2;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20250918_011652_14_CJG01310-.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20250918_011652_14_CJG01310-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up"
-                    style="
-                      grid-area: span 1 / 2 / auto / 3;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20250919_074549_1754745093144.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20250919_074549_1754745093144.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-1"
-                    style="
-                      grid-area: span 1 / 1 / auto / 2;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20251126_194658_07_CJG00920-.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20251126_194658_07_CJG00920-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up"
-                    style="
-                      grid-area: span 2 / 2 / auto / 3;
-                      opacity: 1;
-                      transform: translateY(0px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20251126_194816_KakaoTalk_20251126_194754929.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20251126_194816_KakaoTalk_20251126_194754929.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-1"
-                    style="
-                      grid-area: span 2 / 1 / auto / 2;
-                      opacity: 0;
-                      transform: translateY(50px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20251126_194659_17_CJG01380_-.webp');
-                        aspect-ratio: 16 / 20;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20251126_194659_17_CJG01380_-.webp')"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid-item fade-in-up fade-in-delay-2"
-                    style="
-                      grid-area: span 1 / 2 / auto / 3;
-                      opacity: 0;
-                      transform: translateY(50px);
-                    "
-                  >
-                    <div
-                      class="item image-preloaded"
-                      style="
-                        background-image: url('/default/assets/images/gallery/20251126_195449_04_CJG00478-.webp');
-                        aspect-ratio: 16 / 10;
-                        opacity: 1;
-                      "
-                      onclick="openImageModal('/default/assets/images/gallery/20251126_195449_04_CJG00478-.webp')"
-                    ></div>
-                  </div>
+                    <path
+                      d="M7 10l5 5 5-5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
