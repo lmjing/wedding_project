@@ -139,55 +139,49 @@ function injectWeddingData() {
   // 계좌 정보
   const accountWrap = document.querySelector(".c-account");
   if (accountWrap) {
-    // 신랑측 계좌
-    const groomAccountItem = accountWrap.querySelector(".item:first-child");
-    if (groomAccountItem && accounts.groom_accounts.length > 0) {
-      const textContainers = groomAccountItem.querySelectorAll(".text.gothic");
-      textContainers.forEach((container, index) => {
-        if (accounts.groom_accounts[index]) {
-          const account = accounts.groom_accounts[index];
-          const inner = container.querySelector(".inner");
-          const btn = container.querySelector(".btn-action");
-          if (inner) {
-            inner.innerHTML = `
-                            <span><span class="bank">${account.bank}</span> <span>${account.number}</span></span><br>
-                            <span>${account.name}</span>
-                        `;
-          }
+    const insertBridgeAccountItems = (brideAccountItem, bride_accounts) => {
+      if (brideAccountItem && bride_accounts.length > 0) {
+        bride_accounts.forEach((account) => {
+          const div = document.createElement("div");
+          div.className = "text gothic";
+          div.style.display = "none";
+          div.style.height = "auto";
+
+          div.innerHTML = `
+                    <div class="inner">
+                              <span><span class="bank">${account.bank}</span> <span>${account.number}</span></span><br>
+                              <span>${account.name}</span>
+                              </div>
+                    <div>
+                      <div
+                        class="btn-action"
+                      >
+                        <svg viewBox="0.48 0.48 23.04 23.04" fill="#222F3D">
+                          <path fill="none" d="M0 0h24v24H0z"></path>
+                          <path
+                            d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                          ></path>
+                        </svg>
+                        복사
+                      </div>`;
+          const btn = div.querySelector(".btn-action");
           if (btn) {
             btn.setAttribute(
               "onclick",
               `copyAccount('${account.bank} ${account.number} ${account.name}')`
             );
           }
-        }
-      });
-    }
+          brideAccountItem.appendChild(div);
+        });
+      }
+    };
+    // 신랑측 계좌
+    const groomAccountItem = accountWrap.querySelector(".item:first-child");
+    insertBridgeAccountItems(groomAccountItem, accounts.groom_accounts);
 
     // 신부측 계좌
     const brideAccountItem = accountWrap.querySelector(".item:last-child");
-    if (brideAccountItem && accounts.bride_accounts.length > 0) {
-      const textContainers = brideAccountItem.querySelectorAll(".text.gothic");
-      textContainers.forEach((container, index) => {
-        if (accounts.bride_accounts[index]) {
-          const account = accounts.bride_accounts[index];
-          const inner = container.querySelector(".inner");
-          const btn = container.querySelector(".btn-action");
-          if (inner) {
-            inner.innerHTML = `
-                            <span><span class="bank">${account.bank}</span> <span>${account.number}</span></span><br>
-                            <span>${account.name}</span>
-                        `;
-          }
-          if (btn) {
-            btn.setAttribute(
-              "onclick",
-              `copyAccount('${account.bank} ${account.number} ${account.name}')`
-            );
-          }
-        }
-      });
-    }
+    insertBridgeAccountItems(brideAccountItem, accounts.bride_accounts);
   }
 
   // 연락처 정보
