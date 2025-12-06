@@ -102,27 +102,6 @@ function injectWeddingData() {
     }
   }
 
-  // 가족 소개
-  const membersWrap = document.querySelector(".members-wrap");
-  if (membersWrap) {
-    const groomFamily = membersWrap.querySelector("div:first-child");
-    const brideFamily = membersWrap.querySelector("div:last-child");
-    if (groomFamily) {
-      groomFamily.innerHTML = `
-                <span><span>${family.groom_father} <span>·</span></span> <span>${family.groom_mother}</span></span>
-                <span class="relation"><span>의</span> <span>아들</span></span>
-                <span class="lname">${info.groom_name}</span>
-            `;
-    }
-    if (brideFamily) {
-      brideFamily.innerHTML = `
-                <span><span>${family.bride_father} <span>·</span></span> <span>${family.bride_mother}</span></span>
-                <span class="relation"><span>의</span> <span>딸</span></span>
-                <span class="lname">${info.bride_name}</span>
-            `;
-    }
-  }
-
   // 지도 이미지
   if (mapSettings.mapImage) {
     const mapContainer = document.getElementById("zoomable-map");
